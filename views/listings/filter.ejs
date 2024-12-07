@@ -1,21 +1,35 @@
 <% layout("/layouts/boilerplate") %>
 <style>
   .no-listing {
-  display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  text-align: center; /* Center text inside the div */
-}
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    text-align: center; /* Center text inside the div */
+  }
 
-h1 {
-  text-align: center;
-  font-size: 2.5rem; /* Adjust the font size */
-  color: #333; /* Optional: Set a color for the text */
-}
+  h1 {
+    text-align: center;
+    font-size: 2.5rem; /* Adjust the font size */
+    color: #333; /* Optional: Set a color for the text */
+  }
 
+  .listing-card {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .listing-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  .listing-link {
+    text-decoration: none;
+    color: inherit;
+  }
 </style>
-<body>
-  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-4">
+
+<div class="container-fluid mt-3">
+  <div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1">
     <% if (filteredListing.length === 0) { %>
       <div class="no-listing">
         <h1>No Listing Found!</h1>
@@ -38,4 +52,4 @@ h1 {
       <% } %>
     <% } %>
   </div>
-</body>
+</div>

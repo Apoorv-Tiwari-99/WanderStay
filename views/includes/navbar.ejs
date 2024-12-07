@@ -1,81 +1,146 @@
 <style>
-  .search-btn{
+  .search-btn {
     background-color: #fe424d;
     color: #fff;
     border-radius: 25px;
     padding: 0 1rem;
   }
-  .search-btn:hover{
+
+  .search-btn:hover {
     background-color: #fe424d;
     color: #fff;
   }
-  .search-btn i{
+
+  .search-btn i {
     display: inline;
     margin-right: 0.5rem;
   }
-  .search-inp{
+
+  .search-inp {
     border-radius: 25px;
     padding: 0.5rem 3rem;
   }
-  h3{
+
+  h3 {
     color: #fe424d;
   }
-</style>
-<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
-    <div class="container-fluid">
-      <a class="navbar-brand color" href="/listings"><i class="fa-regular fa-compass"></i></a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-          <h3>wanderstay</h3>
-        </div>
-        <div class="navbar-nav ms-4">
-          <a class="nav-link" href="/listings">Explore</a>
-        </div>
-        <div class="navbar-nav ms-auto">
-          <form class="d-flex" role="search" action="/listings/search">
-            <!-- Dropdown for country selection -->
-            <select class="form-select me-2 search-inp" name="country" aria-label="Select country">
-              <option value="" <%= !country ? "selected" : "" %>>Select a country</option>
-              <option value="India" <%= country === "India" ? "selected" : "" %>>India</option>
-              <option value="United States" <%= country === "United States" ? "selected" : "" %>>United States</option>
-              <option value="Mexico" <%= country === "Mexico" ? "selected" : "" %>>Mexico</option>
-              <option value="Indonesia" <%= country === "Indonesia" ? "selected" : "" %>>Indonesia</option>
-              <option value="United Kingdom" <%= country === "United Kingdom" ? "selected" : "" %>>United Kingdom</option>
-              <option value="Costa Rica" <%= country === "Costa Rica" ? "selected" : "" %>>Costa Rica</option>
-              <option value="Maldives" <%= country === "Maldives" ? "selected" : "" %>>Maldives</option>
-            </select>
-        
-            <!-- Input for searching destination -->
-            <input
-              class="form-control me-2 search-inp"
-              type="search"
-              name="destination"
-              placeholder="Search destination"
-              aria-label="Search"
-              value="<%= destination || '' %>"
-            />
-        
-            <!-- Search button -->
-            <button class="btn search-btn" type="submit">
-              <i class="fa-solid fa-magnifying-glass"></i>Search
-            </button>
-          </form>
-        </div>
-               
+  .hidden-authentication{
+    display: none;
+  }
 
-        <div class="navbar-nav ms-auto">
-          <a class="nav-link" href="/listings/new">Airbnb your home</a>
-          <% if (!currUser) { %>
-            <a class="nav-link "  href="/signup">SignUp</a>
-            <a class="nav-link" href="/login">Log in</a>
-          <%  } %>
-          <% if(currUser) { %>
+  /* Remove the hamburger menu on mobile */
+  .navbar-toggler {
+    display: none;
+  }
+
+  /* Hide elements for mobile and only show logo, login, and sign-up */
+  @media (max-width: 768px) {
+    .navbar-nav:not(.auth-nav) {
+      display: none;
+    }
+
+    .navbar-nav.auth-nav {
+      display: flex;
+      margin-left: auto;
+    }
+
+    .search-inp {
+      display: none;
+    }
+
+    .navbar-nav .nav-link {
+      font-size: 14px;
+    }
+    
+    .hidden-authentication{
+      display:flex ;
+      position: sticky;
+    }
+    .hidden-authentication a{
+      margin-top: 0.7rem;
+      margin-right: 0.7rem;
+    }
+    .hidden-authentication p{
+      margin-top: 0.8rem;
+      margin-right: 4rem;
+      color: red ;
+    }
+  }
+
+  /* Show elements for desktop */
+  @media (min-width: 768px) {
+    .search-inp {
+      width: auto;
+    }
+  }
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="container-fluid">
+    <a class="navbar-brand color" href="/listings">
+      <i class="fa-regular fa-compass"></i>
+    </a>
+    <div class="hidden-authentication">
+      <p>WanderStay</p>
+      <% if (!currUser) { %>
+        <a class="nav-link" href="/signup">SignUp</a>
+        <a class="nav-link" href="/login">Log in</a>
+      <% } %>
+      <% if(currUser) { %>
+        <a class="nav-link" href="/logout">Log out</a>
+      <% } %>
+    </div>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <!-- Logo and wanderstay name for large screens -->
+      <div class="navbar-nav">
+        <h3 class="mb-0">wanderstay</h3>
+      </div>
+
+      <!-- Menu for large screens (Explore, Search, etc.) -->
+      <div class="navbar-nav ms-4 d-none d-md-flex">
+        <a class="nav-link" href="/listings">Explore</a>
+      </div>
+
+      <!-- Search form for larger screens -->
+      <div class="navbar-nav ms-auto d-none d-md-flex">
+        <form class="d-flex" role="search" action="/listings/search">
+          <select class="form-select me-2 search-inp" name="country" aria-label="Select country">
+            <option value="" <%= !country ? "selected" : "" %>>Select a country</option>
+            <option value="India" <%= country === "India" ? "selected" : "" %>>India</option>
+            <option value="United States" <%= country === "United States" ? "selected" : "" %>>United States</option>
+            <option value="Mexico" <%= country === "Mexico" ? "selected" : "" %>>Mexico</option>
+            <option value="Indonesia" <%= country === "Indonesia" ? "selected" : "" %>>Indonesia</option>
+            <option value="United Kingdom" <%= country === "United Kingdom" ? "selected" : "" %>>United Kingdom</option>
+            <option value="Costa Rica" <%= country === "Costa Rica" ? "selected" : "" %>>Costa Rica</option>
+            <option value="Maldives" <%= country === "Maldives" ? "selected" : "" %>>Maldives</option>
+          </select>
+
+          <input
+            class="form-control me-2 search-inp"
+            type="search"
+            name="destination"
+            placeholder="Search destination"
+            aria-label="Search"
+            value="<%= destination || '' %>"
+          />
+
+          <button class="btn search-btn" type="submit">
+            <i class="fa-solid fa-magnifying-glass"></i>Search
+          </button>
+        </form>
+      </div>
+
+      <!-- Login and SignUp Links (always visible on small screens) -->
+      <div class="navbar-nav ms-auto auth-nav">
+        <% if (!currUser) { %>
+          <a class="nav-link" href="/signup">SignUp</a>
+          <a class="nav-link" href="/login">Log in</a>
+        <% } %>
+        <% if(currUser) { %>
           <a class="nav-link" href="/logout">Log out</a>
-          <% } %>
-        </div>
+        <% } %>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>

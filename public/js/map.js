@@ -1,10 +1,13 @@
-  maptilersdk.config.apiKey = mapToken;
-  const map = new maptilersdk.Map({
-    container: 'map', // container's id or the HTML element to render the map
-    style: maptilersdk.MapStyle.STREETS,
-    center: listing.geometry.coordinates, // starting position [lng, lat]
-    zoom: 14, // starting zoom
-  });
+maptilersdk.config.apiKey = mapToken;
+
+const map = new maptilersdk.Map({
+  container: 'map', // container's id or the HTML element to render the map
+  style: maptilersdk.MapStyle.STREETS,
+  center: listing.geometry.coordinates, // starting position [lng, lat]
+  zoom: 14, // starting zoom
+  width: '100%', // Make the map container responsive
+  height: '100%' // Ensure height also adapts
+});
 
 // Create a custom wrapper for the circle and the marker
 const customIconWrapper = document.createElement('div');
@@ -38,8 +41,13 @@ icon.style.transform = 'translate(-50%, -50%)'; // Perfect centering using trans
 customIconWrapper.appendChild(largeCircle);
 customIconWrapper.appendChild(icon);
 
-  const marker = new maptilersdk.Marker({color: "red",draggable: true,element: customIconWrapper })
+const marker = new maptilersdk.Marker({color: "red", draggable: true, element: customIconWrapper })
   .setLngLat(listing.geometry.coordinates)  // listing.geometry.coordinates
-  .setPopup(new maptilersdk.Popup({offset: 25,className: 'my-class'})
+  .setPopup(new maptilersdk.Popup({offset: 25, className: 'my-class'})
   .setHTML(`<h4>${listing.title}</h4><p>Exact location provided after booking</p>`))
   .addTo(map);
+
+// Optional: Add resize event listener to update map on window resize (if required)
+window.addEventListener('resize', () => {
+  map.resize(); // Trigger resize method to ensure map adjusts to the new window size
+});

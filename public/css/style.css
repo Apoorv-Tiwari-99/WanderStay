@@ -115,3 +115,15 @@ background-color: white;
    width: 80vh;
 
  }
+ #map {
+    width: 100%; /* Full width of the parent container */
+    height: 400px; /* You can adjust this as per your preference */
+  }
+  
+  /* For mobile devices */
+  @media (max-width: 768px) {
+    #map {
+      height: 300px; /* Adjust the height on mobile */
+    }
+  }
+  
